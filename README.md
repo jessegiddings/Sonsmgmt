@@ -28,10 +28,14 @@ npm run dev       # build, then serve dist/ at http://localhost:4321
 The build prints a "Before launch" list of anything still missing — absent
 artist photos, links without URLs, a logo too small to stay crisp.
 
-## Adding an artist
+## The roster
 
-Append an object to `data/roster.json`, drop the photo in `assets/artists/`,
-and rebuild. Nothing else changes.
+`data/roster.json` is currently an empty array, so the roster section and its
+nav link do not render at all — the page is logo, About, Contact. That is a
+supported state, not a placeholder: nothing renders empty.
+
+To bring the roster back, append an object, drop the photo in
+`assets/artists/`, and rebuild. Nothing else changes.
 
 ```json
 {
@@ -83,8 +87,6 @@ project for the redirect to fire; adding them is what routes the traffic in.
 
 Still outstanding:
 
-- [ ] Jessy Fury photo → `assets/artists/jessy-fury.jpg`
-- [ ] Final URLs for official site, Instagram, YouTube, TikTok → `data/roster.json`
 - [ ] Confirm `jesse@sonsmgmt.com` is live, or swap the interim address in `data/site.json`
 - [ ] Approve the About copy in `data/site.json`
 - [ ] Higher-resolution logo export or vector redraw
@@ -92,6 +94,5 @@ Still outstanding:
 - [ ] OG card checked in iMessage, Slack and Gmail
 - [ ] Mobile pass on a real phone
 
-Copy deliberately avoids stating a representation relationship. The roster is
-framed as a list of names, which is factual regardless of where the management
-agreement stands.
+The site names no artists and makes no representation claims, so nothing in
+the copy depends on where a management agreement stands.

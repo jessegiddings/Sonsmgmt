@@ -85,7 +85,23 @@ function jsonLd(site) {
 }
 
 export function homePage({ site, roster, logo, og }) {
+  const hasRoster = roster.length > 0;
   const single = roster.length === 1;
+
+  // No roster is a valid state, not an empty shell: the section and its nav
+  // link drop out entirely rather than rendering an empty heading.
+  const rosterSection = hasRoster
+    ? `
+    <section id="roster" class="section" aria-labelledby="roster-label">
+      <div class="shell">
+        <h2 class="section-label" id="roster-label">Roster</h2>
+        <div class="roster" data-count="${rosterCount(roster.length)}">
+${roster.map((a) => artist(a, single)).join("\n")}
+        </div>
+      </div>
+    </section>
+`
+    : "";
 
   return `<!doctype html>
 <html lang="en">
@@ -98,8 +114,7 @@ ${head({ site, title: site.title, description: site.description, canonical: `${s
     <div class="shell">
       <nav aria-label="Sections">
         <ul class="nav">
-          <li><a href="#roster">Roster</a></li>
-          <li><a href="#about">About</a></li>
+${hasRoster ? '          <li><a href="#roster">Roster</a></li>\n' : ""}          <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
@@ -116,16 +131,7 @@ ${head({ site, title: site.title, description: site.description, canonical: `${s
       </picture>
       <p class="hero__tagline">${esc(site.tagline)}</p>
     </section>
-
-    <section id="roster" class="section section--ruled" aria-labelledby="roster-label">
-      <div class="shell">
-        <h2 class="section-label" id="roster-label">Roster</h2>
-        <div class="roster" data-count="${rosterCount(roster.length)}">
-${roster.map((a) => artist(a, single)).join("\n")}
-        </div>
-      </div>
-    </section>
-
+${rosterSection}
     <section id="about" class="section" aria-labelledby="about-label">
       <div class="shell">
         <h2 class="section-label" id="about-label">About</h2>

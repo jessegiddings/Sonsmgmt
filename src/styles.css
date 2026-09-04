@@ -206,12 +206,10 @@ a {
 
 /* ------------------------------------------------------------ sections -- */
 
+/* Every section carries its own top hairline, so the letterpress rules land
+   correctly whether or not the roster sits between the hero and About. */
 .section {
   padding-block: var(--section-space);
-}
-
-.section + .section,
-.section--ruled {
   border-top: 1px solid var(--rule);
 }
 
