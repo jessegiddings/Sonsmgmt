@@ -183,11 +183,16 @@ export async function buildOgImage({ logoPng, outDir }) {
     })
     .toBuffer();
 
+  // Flattened and palette-reduced: the card is ink on paper, so 256 colours is
+  // lossless in practice, and it halves the bytes. Dropping the alpha channel
+  // also keeps preview renderers that composite transparency onto black from
+  // inverting the card.
   await emit(
     path.join(outDir, "img/og.png"),
     await sharp({ create: { width: W, height: H, channels: 4, background: PAPER } })
       .composite([{ input: mark, gravity: "centre" }])
-      .png({ compressionLevel: 9 })
+      .flatten({ background: PAPER })
+      .png({ compressionLevel: 9, palette: true, quality: 100 })
       .toBuffer(),
   );
 

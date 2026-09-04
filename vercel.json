@@ -4,20 +4,6 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "(www\\.)?sonsmanagement\\.com" }],
-      "destination": "https://sonsmgmt.com/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www\\.sonsmgmt\\.com" }],
-      "destination": "https://sonsmgmt.com/:path*",
-      "permanent": true
-    }
-  ],
   "headers": [
     {
       "source": "/fonts/(.*)",

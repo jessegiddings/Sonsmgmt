@@ -79,9 +79,18 @@ square, hand-cropped "S"); the build uses it instead.
 Vercel, zero extra configuration — `vercel.json` sets the build command and
 output directory.
 
-`vercel.json` also carries the 301 from `sonsmanagement.com` (and both `www`
-hosts) to `sonsmgmt.com`. Those domains still have to be added to the Vercel
-project for the redirect to fire; adding them is what routes the traffic in.
+**Domain canonicalisation lives in Vercel's domain settings, not in
+`vercel.json`.** Which host is primary, `www` vs apex, and the 301 from
+`sonsmanagement.com` are all configured per-domain in the Vercel dashboard.
+
+Do not add host-based `redirects` to `vercel.json` as well. Vercel applies its
+domain redirect *and* the config redirect, so a rule pointing `www` → apex
+while the dashboard points apex → `www` produces an infinite loop: the HTML
+may still serve from edge cache while every stylesheet, font and image fails,
+which renders as an unstyled page with a broken logo.
+
+Whichever host is primary must match `domain` in `data/site.json`, since that
+value generates the `canonical` and `og:url` tags.
 
 ## Before launch
 
