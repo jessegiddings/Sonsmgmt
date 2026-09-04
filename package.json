@@ -1,0 +1,18 @@
+{
+  "name": "sonsmgmt",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SONS MGMT — artist management, Los Angeles.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/build.mjs && node scripts/serve.mjs",
+    "serve": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.34.5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

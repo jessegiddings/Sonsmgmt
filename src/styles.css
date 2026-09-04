@@ -1,0 +1,445 @@
+/* ==========================================================================
+   SONS MGMT
+   Black ink on paper. Type is the design.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Big Shoulders Display";
+  src: url("/fonts/big-shoulders-display-latin.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --paper: #f4f0e6;
+  --ink: #141210;
+  --ink-faded: #55504a;
+  --rule: #d8d2c4;
+
+  --display: "Big Shoulders Display", "Archivo Narrow", "Haettenschweiler",
+    "Impact", sans-serif;
+  --body: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    Arial, sans-serif;
+
+  --shell: 1100px;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+  --section-space: clamp(4.5rem, 11vw, 8.5rem);
+}
+
+/* --------------------------------------------------------------- reset -- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+}
+
+body {
+  margin: 0;
+  /* Flat paper colour with a woven grain on top, so the page reads as stock
+     rather than as a screen. Baked into the background rather than layered as
+     a blended overlay — no extra request, no stacking context, no compositing. */
+  background-color: var(--paper);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.09'/%3E%3C/svg%3E");
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------------------------------------------------------------- type -- */
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+figure {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section-label {
+  font-family: var(--body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  margin-bottom: clamp(2rem, 5vw, 3.25rem);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------- nav --- */
+
+.masthead {
+  padding-block: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.masthead .shell {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+  padding: 0;
+}
+
+.nav a {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-faded);
+  padding-block: 0.25rem;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.nav a:hover,
+.nav a:focus-visible {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+/* --------------------------------------------------------------- hero --- */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-block: clamp(3rem, 12vw, 8rem) var(--section-space);
+  min-height: min(72vh, 620px);
+}
+
+.hero__logo {
+  width: clamp(14rem, 56vw, 30rem);
+  margin-inline: auto;
+  animation: rise 900ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.hero__tagline {
+  margin-top: clamp(1.75rem, 4vw, 2.75rem);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  animation: rise 900ms cubic-bezier(0.22, 0.61, 0.36, 1) 160ms both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------ sections -- */
+
+.section {
+  padding-block: var(--section-space);
+}
+
+.section + .section,
+.section--ruled {
+  border-top: 1px solid var(--rule);
+}
+
+/* ------------------------------------------------------------- roster --- */
+
+.roster {
+  display: grid;
+  gap: clamp(3.5rem, 9vw, 6rem);
+}
+
+/* One artist is a full-width feature. Two or more break into an even grid —
+   adding artist #2 is a data change, not a redesign. */
+.roster[data-count="2"],
+.roster[data-count="3"],
+.roster[data-count="4"],
+.roster[data-count="many"] {
+  gap: clamp(2.5rem, 4.5vw, 3.5rem);
+}
+
+@media (min-width: 44em) {
+  .roster[data-count="2"] {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .roster[data-count="3"] {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .roster[data-count="4"],
+  .roster[data-count="many"] {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  }
+}
+
+.artist__photo {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background-color: var(--rule);
+  filter: saturate(0.9) contrast(1.02);
+}
+
+.roster[data-count="1"] .artist__photo {
+  aspect-ratio: 16 / 10;
+}
+
+.artist__name {
+  font-family: var(--display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.82;
+  letter-spacing: 0.005em;
+  margin-top: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-size: clamp(2.75rem, 7vw, 4.5rem);
+}
+
+.roster[data-count="1"] .artist__name {
+  font-size: clamp(3.5rem, 15vw, 10.5rem);
+}
+
+/* Narrower columns need a smaller display size or long names overhang. */
+.roster[data-count="3"] .artist__name,
+.roster[data-count="4"] .artist__name,
+.roster[data-count="many"] .artist__name {
+  font-size: clamp(2.25rem, 3.6vw, 3.25rem);
+}
+
+.artist__descriptor {
+  margin-top: clamp(0.875rem, 2vw, 1.25rem);
+  color: var(--ink-faded);
+  font-size: 1rem;
+  max-width: 42ch;
+}
+
+.roster[data-count="1"] .artist__descriptor {
+  font-size: clamp(1rem, 2vw, 1.1875rem);
+}
+
+.artist__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1.375rem;
+  list-style: none;
+  padding: 0;
+  margin-top: clamp(1.5rem, 3vw, 2rem);
+}
+
+.artist__links a {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.2rem;
+  transition: border-color 0.15s ease;
+}
+
+.artist__links a:hover,
+.artist__links a:focus-visible {
+  border-bottom-color: var(--ink);
+}
+
+/* -------------------------------------------------------------- about --- */
+
+.prose {
+  max-width: 60ch;
+  display: grid;
+  gap: 1.5rem;
+  font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+}
+
+/* ------------------------------------------------------------ contact --- */
+
+.contact__email {
+  display: inline-block;
+  font-family: var(--display);
+  font-weight: 700;
+  line-height: 0.9;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: clamp(1.875rem, 7.5vw, 5rem);
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.15s ease;
+  overflow-wrap: anywhere;
+}
+
+.contact__email:hover,
+.contact__email:focus-visible {
+  border-bottom-color: var(--ink);
+}
+
+.contact__note {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  color: var(--ink-faded);
+  font-size: 0.9375rem;
+}
+
+/* ------------------------------------------------------------- footer --- */
+
+.footer {
+  border-top: 1px solid var(--rule);
+  padding-block: clamp(2.5rem, 6vw, 4rem);
+}
+
+.footer .shell {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+}
+
+.footer__mark {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.footer__legal {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-faded);
+}
+
+/* --------------------------------------------------------- press stub --- */
+
+.stub {
+  min-height: 68vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: var(--section-space);
+}
+
+.stub__title {
+  font-family: var(--display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.85;
+  font-size: clamp(3rem, 12vw, 7rem);
+}
+
+.stub__body {
+  margin-top: clamp(1.5rem, 3vw, 2rem);
+  max-width: 46ch;
+  color: var(--ink-faded);
+}
+
+.stub__back {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.2rem;
+  align-self: flex-start;
+}
+
+.stub__back:hover,
+.stub__back:focus-visible {
+  border-bottom-color: var(--ink);
+}
+
+/* ----------------------------------------------------- motion / print --- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media print {
+  body {
+    background-image: none;
+  }
+  .masthead,
+  .nav {
+    display: none;
+  }
+}
