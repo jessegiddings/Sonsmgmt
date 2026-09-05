@@ -136,7 +136,7 @@ a {
 
 .masthead .shell {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .nav {
@@ -211,6 +211,7 @@ a {
 .section {
   padding-block: var(--section-space);
   border-top: 1px solid var(--rule);
+  text-align: center;
 }
 
 /* ------------------------------------------------------------- roster --- */
@@ -277,6 +278,7 @@ a {
 
 .artist__descriptor {
   margin-top: clamp(0.875rem, 2vw, 1.25rem);
+  margin-inline: auto;
   color: var(--ink-faded);
   font-size: 1rem;
   max-width: 42ch;
@@ -291,6 +293,7 @@ a {
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.5rem 1.375rem;
+  justify-content: center;
   list-style: none;
   padding: 0;
   margin-top: clamp(1.5rem, 3vw, 2rem);
@@ -315,7 +318,8 @@ a {
 /* -------------------------------------------------------------- about --- */
 
 .prose {
-  max-width: 60ch;
+  max-width: 52ch;
+  margin-inline: auto;
   display: grid;
   gap: 1.5rem;
   font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
@@ -329,6 +333,7 @@ a {
   display: inline-block;
   width: 100%;
   max-width: 32rem;
+  margin-inline: auto;
   border-bottom: 1px solid transparent;
   padding-bottom: 0.4rem;
   transition: border-color 0.15s ease;
@@ -387,14 +392,15 @@ a {
 .footer {
   border-top: 1px solid var(--rule);
   padding-block: clamp(2.5rem, 6vw, 4rem);
+  text-align: center;
 }
 
 .footer .shell {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem 2rem;
+  justify-content: center;
+  gap: 0.75rem;
 }
 
 .footer__mark {
@@ -417,7 +423,9 @@ a {
   min-height: 68vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
+  text-align: center;
   padding-block: var(--section-space);
 }
 
@@ -431,6 +439,7 @@ a {
 
 .stub__body {
   margin-top: clamp(1.5rem, 3vw, 2rem);
+  margin-inline: auto;
   max-width: 46ch;
   color: var(--ink-faded);
 }
@@ -444,7 +453,7 @@ a {
   text-decoration: none;
   border-bottom: 1px solid var(--rule);
   padding-bottom: 0.2rem;
-  align-self: flex-start;
+  align-self: center;
 }
 
 .stub__back:hover,
