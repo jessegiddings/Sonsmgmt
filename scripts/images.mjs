@@ -224,6 +224,37 @@ export async function buildFavicons({ logoPng, outDir, override }) {
 }
 
 /**
+ * The hand-painted email lockup. Same treatment as the logo — it arrives as a
+ * scan with paper baked in, so the paper is knocked out to alpha and the
+ * strokes repainted in brand ink, letting it sit on the page with no visible
+ * rectangle. Ships at native resolution; it is the sharpest asset on the site.
+ */
+export async function buildEmailLockup({ source, outDir }) {
+  const mark = await knockOutPaper(source);
+  const { width = 0, height = 0 } = await sharp(mark).metadata();
+  const targetWidth = Math.min(width, 1800);
+  const targetHeight = Math.round((targetWidth / width) * height);
+
+  const resized = () => sharp(mark).resize({ width: targetWidth });
+
+  await emit(
+    path.join(outDir, "img/email.png"),
+    await resized().png({ compressionLevel: 9 }).toBuffer(),
+  );
+  await emit(
+    path.join(outDir, "img/email.webp"),
+    await resized().webp({ quality: 92, alphaQuality: 100 }).toBuffer(),
+  );
+
+  return {
+    png: "/img/email.png",
+    webp: "/img/email.webp",
+    width: targetWidth,
+    height: targetHeight,
+  };
+}
+
+/**
  * Artist photos: two widths, WebP + JPEG, so the roster stays sharp on a phone
  * without shipping a print-resolution file to it.
  */

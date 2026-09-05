@@ -84,7 +84,7 @@ function jsonLd(site) {
   });
 }
 
-export function homePage({ site, roster, logo, og }) {
+export function homePage({ site, roster, logo, og, emailLockup }) {
   const hasRoster = roster.length > 0;
   const single = roster.length === 1;
 
@@ -102,6 +102,19 @@ ${roster.map((a) => artist(a, single)).join("\n")}
     </section>
 `
     : "";
+
+  // The painted lockup is the visual; a live-text copy of the address sits
+  // under it so the address can still be selected and copied. Without the
+  // artwork, the address is simply set as type.
+  const contact = emailLockup
+    ? `        <a class="contact__lockup" href="mailto:${esc(site.email)}">
+          <picture>
+            <source type="image/webp" srcset="${esc(emailLockup.webp)}">
+            <img src="${esc(emailLockup.png)}" width="${emailLockup.width}" height="${emailLockup.height}" alt="${esc(site.email)}" decoding="async">
+          </picture>
+        </a>
+        <p class="contact__address"><span>${esc(site.email)}</span></p>`
+    : `        <a class="contact__email" href="mailto:${esc(site.email)}">${esc(site.email)}</a>`;
 
   return `<!doctype html>
 <html lang="en">
@@ -144,7 +157,7 @@ ${site.about.map((p) => `          <p>${esc(p)}</p>`).join("\n")}
     <section id="contact" class="section" aria-labelledby="contact-label">
       <div class="shell">
         <h2 class="section-label" id="contact-label">Contact</h2>
-        <a class="contact__email" href="mailto:${esc(site.email)}">${esc(site.email)}</a>
+${contact}
         <p class="contact__note">${esc(site.contactNote)}</p>
       </div>
     </section>

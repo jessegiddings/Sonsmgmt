@@ -74,6 +74,23 @@ Every rendition comes from that one knockout: the hero (`WebP` + `PNG`), the
 To override the automatic favicon crop, add `assets/favicon-source.png` (a
 square, hand-cropped "S"); the build uses it instead.
 
+## The painted email lockup
+
+`assets/email-lockup.png` (`.jpg`/`.webp` also accepted) is optional artwork:
+the contact address hand-painted in the same brush hand as the logo. When it
+is present the build knocks its paper out to transparency exactly as it does
+the logo, and the contact section renders it as an image wrapped in a
+`mailto:` link, with the address as its `alt` text so screen readers announce
+it correctly. A live-text copy of the address sits underneath — an image
+cannot be selected, and people copy email addresses — set to select in full
+on a single click.
+
+With no artwork present the section falls back to the address set as type.
+Both states are supported; the build reports which one it used.
+
+If the address in `data/site.json` ever changes, the artwork has to be
+repainted to match. The build cannot check that they agree.
+
 ## Deploying
 
 Vercel, zero extra configuration — `vercel.json` sets the build command and

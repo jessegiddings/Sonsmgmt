@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import {
   buildArtistPhoto,
+  buildEmailLockup,
   buildFavicons,
   buildLogo,
   buildOgImage,
@@ -30,6 +31,15 @@ async function findLogo() {
     if (await exists(candidate)) return candidate;
   }
   throw new Error("No logo found. Expected assets/logo.{svg,png,jpg,jpeg,webp}.");
+}
+
+/** The painted email lockup is optional; absent, contact falls back to text. */
+async function findEmailLockup() {
+  for (const name of ["email-lockup.png", "email-lockup.jpg", "email-lockup.jpeg", "email-lockup.webp"]) {
+    const candidate = path.join(root, "assets", name);
+    if (await exists(candidate)) return candidate;
+  }
+  return null;
 }
 
 async function findPhoto(entry) {
@@ -71,6 +81,11 @@ async function main() {
     buildFavicons({ logoPng, outDir: dist, override: faviconOverride }),
   ]);
 
+  const emailSource = await findEmailLockup();
+  const emailLockup = emailSource
+    ? await buildEmailLockup({ source: emailSource, outDir: dist })
+    : null;
+
   const warnings = [];
   if (logo.width < 1000) {
     warnings.push(
@@ -102,7 +117,17 @@ async function main() {
     }
   }
 
-  await writeFile(path.join(dist, "index.html"), homePage({ site, roster: rosterOut, logo, og }));
+  if (!emailLockup) {
+    warnings.push(
+      "No painted email lockup found (assets/email-lockup.png). Contact is " +
+        "using the live-text treatment; drop the file in and rebuild to switch.",
+    );
+  }
+
+  await writeFile(
+    path.join(dist, "index.html"),
+    homePage({ site, roster: rosterOut, logo, og, emailLockup }),
+  );
   await mkdir(path.join(dist, "press"), { recursive: true });
   await writeFile(path.join(dist, "press/index.html"), pressPage({ site, og }));
 
@@ -140,6 +165,7 @@ async function main() {
   console.log(`  logo   ${logo.width}×${logo.height}`);
   console.log(`  og     ${og.width}×${og.height}`);
   console.log(`  roster ${rosterOut.length} artist${rosterOut.length === 1 ? "" : "s"}`);
+  if (emailLockup) console.log(`  email  ${emailLockup.width}×${emailLockup.height} (painted)`);
 
   if (warnings.length) {
     console.log("\nBefore launch:");
